@@ -5,6 +5,7 @@ Gluster with ansible
 A simple, rough ansible script I'm working on for my own intents and purposes. Mostly for learning ansible.
 
 What does it do?
+- Two different site.yml's. One is a complete install and the other only pushes config.
 - Install GlusterFS-server/client, php5-mysql, php5-fpm and nginx.
 - Make a gluster brick and mount it under /var/www/html.
 - Push a simple backup script complete with cron entry.
