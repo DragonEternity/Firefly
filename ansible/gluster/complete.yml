@@ -1,6 +1,5 @@
 ---
 - hosts: gluster_servers
-  remote_user: user
   vars_prompt:
     - name: primary_ip
       prompt: "Primary IP?"
@@ -18,12 +17,10 @@
         repo='deb http://download.gluster.org/pub/gluster/glusterfs/3.9/LATEST/Debian/jessie/apt jessie main'
         state=present
         filename=gluster-fs
-    - name: Install GlusterFS, PhP5-FPM, Php5-MySQL
+    - name: Install GlusterFS
       apt: name={{item}} state=present update_cache=yes
       with_items:
         - glusterfs-*
-        - php5-fpm
-        - php5-mysql
     - name: Ensure GlusterFS service is running
       service:
         name=glusterfs-*
@@ -73,7 +70,6 @@
         name="Backup varwwwhtml"
         hour="0"
         minute="0"
-        weekday="0"
         job=/scripts/bup.sh
       run_once: true
     - name: Install NginX
@@ -89,3 +85,11 @@
       service:
         name=nginx
         state=reloaded
+    - name: Copy mariadb.sh to servers
+      copy:
+        src=./files/mariadb.sh
+        dest=/scripts/
+    - name: Make mariadb.sh executable through shell
+      shell: chmod +x /scripts/mariadb.sh
+      args:
+        warn: False

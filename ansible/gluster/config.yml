@@ -4,7 +4,7 @@
   tasks:
     - name: Copy bup.sh to /scripts
       copy:
-        src=/srv/ansible/files/bup.sh
+        src=./files/bup.sh
         dest=/scripts/
     - name: Make bup.sh executable through shell.
       shell: chmod +x /scripts/bup.sh
@@ -20,7 +20,7 @@
       run_once: true
     - name: Copy pre-defined NginX config to folder
       copy:
-        src=/srv/ansible/files/default
+        src=./files/default
         dest=/etc/nginx/sites-available/
         force=yes
     - name: Reload NginX
