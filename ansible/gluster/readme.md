@@ -13,4 +13,4 @@ What does it do?
 
 What doesn't it do?
 - The backup script requires some manual input as to where files should go.
-- Replica set count isn't automated.
+- Requires a host file with the group [gluster_servers] or just edit the .yml's and define your own group.
