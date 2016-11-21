@@ -15,7 +15,6 @@
         name="Backup varwwwhtml"
         hour="0"
         minute="0"
-        weekday="0"
         job=/scripts/bup.sh
       run_once: true
     - name: Copy pre-defined NginX config to folder
