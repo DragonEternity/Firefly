@@ -12,5 +12,5 @@ wsrep_cluster_name="Test"
 wsrep_cluster_address="gcomm://db1,db2,db3"
 wsrep_sst_method=rsync
 wsrep_on=ON
-wsrep_node_address="192.168.1.32"
+wsrep_node_address="localhost"
 wsrep_node_name="DB2"
