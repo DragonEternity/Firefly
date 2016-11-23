@@ -85,11 +85,5 @@
       service:
         name=nginx
         state=reloaded
-    - name: Copy mariadb.sh to servers
-      copy:
-        src=./files/mariadb.sh
-        dest=/scripts/
-    - name: Make mariadb.sh executable through shell
-      shell: chmod +x /scripts/mariadb.sh
-      args:
-        warn: False
+    - name: Install mariadb with shell script
+      script: ./files/mariadb.sh
