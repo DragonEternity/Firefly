@@ -4,7 +4,7 @@
 # Insert a cd into this script to a local repostiry.
 
 
-git fetch
+sudo git fetch
 UPSTREAM=${1:-'@{u}'}
 LOCAL=$(sudo git rev-parse @)
 REMOTE=$(sudo git rev-parse "remotes/origin/master")
@@ -15,7 +15,7 @@ if [ $LOCAL = $REMOTE ]; then
 elif [ $LOCAL = $BASE ]; then
     echo "Local is out-of-date."
     echo "Pulling from remote."
-#    git pull
+    git pull
 else
     echo "Diverged"
 fi
