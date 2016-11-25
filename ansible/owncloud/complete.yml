@@ -1,0 +1,24 @@
+---
+- hosts: owncloud
+  tasks:
+    - name: Add owncloud key
+      shell: sudo wget -nv https://download.owncloud.org/download/repositories/stable/Debian_8.0/Release.key && sudo apt-key add - < Release.key
+      args:
+        warn: false
+    - name: Add owncloud repo
+      shell: sudo sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Debian_8.0/ /' > /etc/apt/sources.list.d/owncloud.list"
+      args:
+        warn: false
+    - name: Install Apache2, PhP5, Owncloud
+      apt: name={{item}} state=present update_cache=yes
+      with_items:
+        - php5
+        - owncloud
+    - name: Install mariadb with shell script
+      script: ./files/mariadb.sh
+    - name: Chown /var/www/owncloud
+      shell: sudo chown -R www-data:www-data /var/www/owncloud/
+      args:
+        warn: false
+    - name: Create database and grant rights.
+      script: ./files/database.sh
