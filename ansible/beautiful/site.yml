@@ -1,0 +1,26 @@
+---
+- hosts: web
+  remote_user: debian  
+  tasks:
+  - name: Install Apache2
+    apt:
+      name: apache2
+      state: latest
+      update_cache: yes
+  - name: Create files dir on remote
+    file:
+      path=/var/www/html/files
+      state=directory  
+  - name: Copy html
+    copy:
+      src=./files/index.html
+      dest=/var/www/html/index.html
+  - name: Copy source image
+    copy:      
+      src=./files/image.jpeg
+      dest=/var/www/html/files/image.jpeg
+  - name: Restart Apache2 service
+    service:
+      name: apache2
+      state: reloaded
+  
