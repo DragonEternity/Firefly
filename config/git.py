@@ -1,6 +1,6 @@
 # Python script for comparing git dirs. It's basically bash but with easier vars.
 from subprocess import call
-dir = "/home/user/Testing" 
+dir = "gitdir" 
 
 def compare():
 	call(["git", "-C", dir, "fetch"])
