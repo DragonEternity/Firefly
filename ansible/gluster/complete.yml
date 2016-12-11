@@ -50,37 +50,11 @@
         fstype: glusterfs
         opts: "defaults,_netdev"
         state: mounted
-    - name: Create scripts dir for bup.sh
-      file:
-        name=/scripts
-        state=directory
-    - name: Copy bup.sh to /scripts
-      copy:
-        src=./files/bup.sh
-        dest=/scripts/
-    - name: Make bup.sh executable through shell.
-      shell: chmod +x /scripts/bup.sh
-      args:
-        warn: false
-    - name: Add crontab entry for bup.sh to root's crontab
-      cron:
-        name="Backup varwwwhtml"
-        hour="0"
-        minute="0"
-        job=/scripts/bup.sh
-      run_once: true
     - name: Install NginX
       apt:
         name: nginx 
         state: present
-    - name: Copy pre-defined NginX config to folder
-      copy:
-        src=./files/default
-        dest=/etc/nginx/sites-available/
-        force=yes
     - name: Reload NginX
       service:
         name=nginx
         state=reloaded
-    - name: Install mariadb with shell script
-      script: ./files/mariadb.sh
