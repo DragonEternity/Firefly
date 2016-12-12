@@ -1,5 +1,5 @@
 # Auto-installs mariadb with pw.
-# This currently works but it's extremely stupid.
+# Old, weird version.
 
 from subprocess import call
 import os
