@@ -18,7 +18,7 @@ def feedpw():
 
 def install():
      call(["apt-get", "install", "--yes", "--force-yes", "mariadb-server-10.1"])
-     call(["mysql", "-u", "root", "-p", "-e", "SET PASSWORD FOR root@localhost = PASSWORD"+"("+"'"+pw+"'"+")"+";"])
+     call(["mysql", "-u", "root", "-e", "SET PASSWORD FOR root@localhost = PASSWORD("+"'"+pw+"'"+");"])
 
 
 
