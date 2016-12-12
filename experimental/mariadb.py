@@ -15,7 +15,7 @@ def preinstall():
      call(["apt-get", "--yes", "--force-yes", "update"])
 
 def feedpw():
-     call(["export", "DEBIAN_FRONTEND=noninteractive"],shell=True, env=d)
+     os.environ["DEBIAN_FRONTEND"] = "noninteractive"
      call(["debconf-set-selections", "<<<", "'""mariadb-server-10.1", "mysql-server/root_password", "password", pw,"'"], shell=True)
      call(["debconf-set-selections", "<<<", "'","mariadb-server-10.1 mysql-server/root_password_again", "password", pw,"'"], shell=True)
      
