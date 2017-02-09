@@ -1,0 +1,47 @@
+# Base vagrant file for VM's
+
+Vagrant.configure("2") do |config|
+  # The box used for the VM
+  config.vm.box = "debian/jessie64"
+
+  # Public network interface and the host interface it's bridged to
+  config.vm.network "public_network"
+
+  # Set RAM
+   config.vm.provider "virtualbox" do |vb|
+     vb.memory = "512"
+   end
+
+  # Install some stuff
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y git vim
+  SHELL
+
+  # Add pub to authorized_keys
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
+  config.vm.provision "shell", inline: <<-SHELL
+    cat /home/vagrant/.ssh/me.pub >> /home/vagrant/.ssh/authorized_keys
+    rm -rf /home/vagrant/.ssh/me.pub
+  SHELL
+
+  # Set Hostname
+  config.vm.hostname = "DebVagrant"
+  # Set post-up message
+  config.vm.post_up_message = "Welcome to Debian, son."
+
+  # Set VM name
+  config.vm.define :DebVagrant do |t|
+  end
+
+  # Set Virtualbox VM name
+  config.vm.provider :virtualbox do |vb|
+          vb.name = "DebVagrant"
+  end
+
+  # Print ip add for ip info
+  config.vm.provision "shell", inline: <<-SHELL
+    ip add
+  SHELL
+
+end
