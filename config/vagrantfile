@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   # Install some stuff
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y git vim
+    apt-get install -y git vim apt-transport-https
   SHELL
 
   # Add pub to authorized_keys
