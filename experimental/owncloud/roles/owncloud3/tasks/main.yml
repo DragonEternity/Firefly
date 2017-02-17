@@ -15,4 +15,8 @@
 - name: Copy owncloud conf
   copy:
     src=config.php
-    dest=/usr/share/owncloud/config/
+    dest=/var/www/owncloud/config/
+- name: Chown /var/www/owncloud
+  shell: sudo touch /var/www/owncloud/data/.ocdata && sudo chown -R www-data:www-data /var/www/owncloud/
+  args:
+    warn: false
