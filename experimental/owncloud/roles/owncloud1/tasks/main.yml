@@ -1,0 +1,18 @@
+---
+- name: Add owncloud key
+  shell: sudo wget -nv https://download.owncloud.org/download/repositories/stable/Debian_8.0/Release.key && sudo apt-key add - < Release.key
+  args:
+    warn: false
+- name: Add owncloud repo
+  shell: sudo sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Debian_8.0/ /' > /etc/apt/sources.list.d/owncloud.list"
+  args:
+    warn: false
+- name: Install Apache2, PhP5, Owncloud
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - php5
+    - owncloud
+- name: Copy owncloud conf
+  copy:
+    src=config.php
+    dest=/usr/share/owncloud/config/

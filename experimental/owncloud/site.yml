@@ -1,0 +1,16 @@
+---
+- hosts: owncloud1
+  remote_user: vagrant
+  roles:
+  - owncloud1
+
+- hosts: owncloud2
+  remote_user: vagrant
+  roles:
+  - owncloud2
+
+- hosts: owncloud3
+  remote_user: vagrant
+  roles:
+  - owncloud3
+
