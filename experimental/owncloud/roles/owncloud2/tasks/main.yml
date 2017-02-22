@@ -1,4 +1,13 @@
 ---
+- name: Add GlusterFS repo GPO key through shell
+  shell: wget -O - http://download.gluster.org/pub/gluster/glusterfs/3.9/rsa.pub | apt-key add -
+  args:
+    warn: False
+- name: Add GlusterFS repository
+  apt_repository:
+    repo='deb http://download.gluster.org/pub/gluster/glusterfs/3.9/LATEST/Debian/jessie/apt jessie main'
+    state=present
+    filename=gluster-fs
 - name: Add owncloud key
   shell: sudo wget -nv https://download.owncloud.org/download/repositories/stable/Debian_8.0/Release.key && sudo apt-key add - < Release.key
   args:
@@ -7,10 +16,26 @@
   shell: sudo sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Debian_8.0/ /' > /etc/apt/sources.list.d/owncloud.list"
   args:
     warn: false
-- name: Install Apache2, PhP5, Owncloud
+- name: Install PhP5, GlusterFS-Client
   apt: name={{item}} state=present update_cache=yes
   with_items:
     - php5
+    - glusterfs-client
+    - glusterfs-server
+- name: Create GlusterFS brick mount dir
+  file:
+    path=/var/www/owncloud/data
+    state=directory
+- name: Mount  
+  mount:
+    name: "/var/www/owncloud/data"
+    src: "192.168.178.68:/gv0"
+    fstype: glusterfs
+    opts: "defaults"
+    state: mounted
+- name: Install Owncloud
+  apt: name={{item}} state=present update_cache=no
+  with_items:
     - owncloud
 - name: Copy owncloud conf
   copy:
@@ -20,4 +45,3 @@
   shell: sudo touch /var/www/owncloud/data/.ocdata && sudo chown -R www-data:www-data /var/www/owncloud/
   args:
     warn: false
-
